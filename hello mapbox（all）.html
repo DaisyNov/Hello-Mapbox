@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'/> 
+    <title>Hello MapboxGL</title>
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet'/>
+</head>
+
+<body>
+    <div id='map'style='width: 900px; height: 600px;'></div>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGFpc3l2b3YiLCJhIjoiY2tjenRoNXI2MG16djJ5bmhlYmltajBsMCJ9.mOHhAK068saumMZgMl9PuA'; // 设置MapBox访问令牌
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9'
+    });
+    </script>    
+
+</body>
+
+
+</html>

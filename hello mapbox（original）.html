@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'/> 
+    <title>Hello MapboxGL</title>
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet'/>
+</head>
+
+<body>
+    <div id='map'style='width: 900px; height: 600px;'></div>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGFpc3l2b3YiLCJhIjoiY2tjenRoNXI2MG16djJ5bmhlYmltajBsMCJ9.mOHhAK068saumMZgMl9PuA'; // 设置MapBox访问令牌
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9'
+    });
+    var nav= new mapboxgl.NavigationControl();
+    map.addControl(nav,'top-left');
+    var geolocate = new mapboxgl.GeolocateControl({
+        positionOptions:{
+            enableHighAccuracy:true//高精度定位
+        },
+        trackUserLocation: true//跟踪位置变化
+    })
+    map.addControl(geolocate);
+    var scale = new mapboxgl.ScaleControl({
+        maxWidth:80,//控件最大宽度，单位像素
+        unit:'metric'//距离为米
+    });
+    map.addControl(scale);
+    var fullScreen = new mapboxgl.FullscreenControl();
+    map.addControl(fullScreen);
+    //标记弹窗
+    var img = new Image();
+    img.src = './marker-icon.png';
+    var popup = new mapboxgl.Popup({offset:{'bottom':[0,-42]}})
+            .setHTML("<h1>Hello MapboxGL</h1>");
+    var marker = new mapboxgl.Marker(img,{offset:{x:0,y:-20.5}})
+            .setLngLat([104.06,30.67])
+            .setPopup(popup)
+            .addTo(map);
+            //画图
+            map.on('load',function(){
+                map.addSource("polySet1",{
+                   'type' :'geojson',
+                   'data':{
+                       "features":[
+                           {
+                               "type":"Feature",
+                               "geometry":{
+                                   "coordinates":[
+                                       [
+                                           [104.1,30.67],
+                                           [104.3,30.67],
+                                           [104.2,30.87]
+                                       ]
+                                   ],
+                                   "type":"Polygon"
+                               }
+                           }
+                       ],
+                       "type":"FeatureCollection"//要素集合
+                   }
+                });
+                map.addLayer({
+                    'id':'polyLayer1',//图层ID
+                    'type':'fill',//填充面
+                    'source':"polySet1",//使用数据源ID
+                    'paint':{
+                        'fill-color':'blue',//填充色
+                        'fill-opacity':0.8//填充透明度
+                    }
+                });
+            });
+    </script>    
+
+</body>
+
+
+</html>
